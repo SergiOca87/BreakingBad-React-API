@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
-import './App.css';
+import './css/App.css';
 
 // Components
 import Header from './components/Header'
@@ -19,24 +19,31 @@ const App = () => {
   // Isolate the fecth into another function
   // useEffect, add searchQuery dependency (reloads everytime it changes)
   // useEffect, create a way to filter the Array. So we prevent API calls
+  // const fetchData = async () => {
+  //   const result = await axios(`https://www.breakingbadapi.com/api/characters`);
+  //   setItems(result.data);
+  // }
+
+  // fetchData();
 
   useEffect(() => {
     const fetchItems = async () => {
       const result = await axios(`https://www.breakingbadapi.com/api/characters`)
 
-      console.log(result);
       setItems(result.data)
+      console.log(result.data)
       setIsLoading(false)
     }
 
     fetchItems();
-  }, [])
+  }, []);
+
 
   return (
     <div className="App">
         <Header />
         <Search getSearchQuery={(q) => setSearchQuery(q)}/>
-        <CharacterGrid isLoading={isLoading} items={items} />
+        <CharacterGrid isLoading={isLoading} items={items} searchQuery={searchQuery}/>
     </div>
   );
 }
